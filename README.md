@@ -1,24 +1,29 @@
-# QR Menu Project
+# QR Menü Projesi
 
-React, TypeScript, Tailwind ve Supabase ile tek restoran odakli mobil QR menu uygulamasi.
+React, TypeScript, Tailwind CSS ve Supabase ile hazırlanmış tek restoran odaklı mobil QR menü ve admin paneli uygulaması.
 
-## Ozellikler
+Müşteri masadaki QR kodu okutarak menüye ulaşır, ürünleri sepete ekler ve sipariş oluşturur. Restoran sahibi admin panelinden menüyü, masaları, QR kodları, siparişleri, tema ayarlarını ve raporları yönetir.
 
-- Musteri QR menusu: `/menu/:tableCode`
-- Sepete ekleme, adet duzenleme ve siparis olusturma
-- Supabase Auth ile admin girisi
-- Canli siparis takibi
-- Menu, kategori, masa ve tema yonetimi
-- Supabase Storage ile urun gorseli yukleme
-- Masa QR kodu onizleme ve indirme
-- Siparis raporlari: yogun saatler, cok/az satan urunler, masa yogunlugu, gelir ve ortalama sepet
+## Özellikler
 
-## Kullanilan Teknolojiler
+- Mobil uyumlu müşteri QR menüsü: `/menu/:tableCode`
+- Kategori bazlı menü görünümü ve kategoriye smooth scroll
+- Ürün detay modalı, sepet, sipariş notu ve sipariş oluşturma
+- Müşteri tarafında TR/EN dil seçimi ve açık/koyu tema seçimi
+- Admin giriş ekranı ve Supabase Auth desteği
+- Canlı sipariş takibi ve sipariş durumu güncelleme
+- Menü, kategori, ürün, masa ve QR yönetimi
+- Ürünlerde Türkçe/İngilizce ad-açıklama, görsel URL/dosya yükleme ve besin değerleri
+- Restoran logosu, hero arka planı, font ve 10 hazır tema paleti
+- Supabase Storage ile ürün ve marka görseli yükleme
+- Raporlar: gelir, ortalama sepet, çok/az satan ürünler, yoğun saatler ve masa bazlı sipariş adedi
+
+## Kullanılan Teknolojiler
 
 - React + TypeScript
 - Vite
 - Tailwind CSS
-- Supabase CLI, Auth, Database, Realtime, Storage
+- Supabase CLI, Database, Auth, Realtime ve Storage
 - react-router-dom
 - react-hook-form
 - lucide-react
@@ -26,19 +31,25 @@ React, TypeScript, Tailwind ve Supabase ile tek restoran odakli mobil QR menu uy
 
 ## Kurulum
 
+Bağımlılıkları yükleyin:
+
 ```bash
 npm install
+```
+
+Ortam değişkenlerini hazırlayın:
+
+```bash
 cp .env.example .env.local
 ```
 
-Supabase local servislerini baslatin:
+Local Supabase servislerini başlatın:
 
 ```bash
 npx supabase start
-npx supabase db reset
 ```
 
-`supabase start` ciktisindaki `API URL` ve `anon key` degerlerini `.env.local` icine yazin:
+Komut çıktısındaki `API URL` ve `anon key` değerlerini `.env.local` dosyasına yazın:
 
 ```env
 VITE_SUPABASE_URL=http://127.0.0.1:54321
@@ -46,37 +57,78 @@ VITE_SUPABASE_ANON_KEY=anon-key-buraya
 VITE_PUBLIC_SITE_URL=http://localhost:5173
 ```
 
-Uygulamayi calistirin:
+Migration ve seed verilerini local veritabanına uygulayın:
+
+```bash
+npx supabase db reset
+```
+
+Uygulamayı çalıştırın:
 
 ```bash
 npm run dev
 ```
 
-## Admin Kullanici Olusturma
-
-Local Supabase Studio genelde `http://127.0.0.1:54323` adresinde acilir.
-
-1. Studio > Authentication > Users sayfasina gidin.
-2. Yeni bir kullanici olusturun.
-3. Bu email ve sifre ile `/admin/login` sayfasindan giris yapin.
-
 ## Demo URL'leri
 
 - Ana sayfa: `http://localhost:5173`
-- Demo masa: `http://localhost:5173/menu/masa-1`
-- Admin: `http://localhost:5173/admin/login`
+- Örnek masa: `http://localhost:5173/menu/masa-1`
+- Admin giriş: `http://localhost:5173/admin/login`
 
-## Supabase Notlari
+## Admin Kullanıcı Oluşturma
 
-- Migration dosyasi: `supabase/migrations/202606150001_initial_schema.sql`
-- Seed dosyasi: `supabase/seed.sql`
-- Urun gorselleri icin public `menu-images` Storage bucket'i olusturulur.
-- Public kullanicilar aktif menu verilerini okuyabilir ve siparis olusturabilir.
-- Admin islemleri Supabase Auth ile giris yapmis kullanicilara aciktir.
+Local Supabase Studio genellikle şu adreste açılır:
 
-## Production Icin
+```text
+http://127.0.0.1:54323
+```
 
-1. Supabase cloud projesi olusturun.
-2. Migration ve seed SQL'lerini Supabase CLI ile remote projeye uygulayin.
-3. `.env.local` yerine deployment ortaminda `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_PUBLIC_SITE_URL` girin.
-4. Supabase Auth redirect URL listesine production domaininizi ekleyin.
+1. Supabase Studio > Authentication > Users sayfasına gidin.
+2. Yeni kullanıcı oluşturun.
+3. Kullanıcıyı oluştururken `Auto Confirm User` seçeneğini işaretleyin.
+4. Oluşturduğunuz email ve şifre ile `/admin/login` ekranından giriş yapın.
+
+## Supabase Yapısı
+
+Proje Supabase CLI migration akışıyla gelir.
+
+- Migration dosyaları: `supabase/migrations/`
+- Başlangıç verileri: `supabase/seed.sql`
+- Ürün ve marka görselleri için public `menu-images` bucket'ı kullanılır.
+- Public kullanıcılar aktif menü, masa ve restoran ayarlarını okuyabilir.
+- Public kullanıcılar sipariş oluşturabilir.
+- Admin işlemleri Supabase Auth kullanıcısına kısıtlanır.
+
+Local veritabanını sıfırlamak ve seed verilerini yeniden yüklemek için:
+
+```bash
+npm run supabase:reset
+```
+
+## GitHub'a Yüklerken Dikkat
+
+`.env.local` dosyasını kesinlikle GitHub'a yüklemeyin. Bu dosya `.gitignore` içindedir.
+
+GitHub'a yüklenmemesi gereken diğer dosyalar:
+
+- `node_modules/`
+- `dist/`
+- `.DS_Store`
+- `*.tsbuildinfo`
+- `supabase/.temp/`
+- `supabase/.branches/`
+
+## Production Notları
+
+1. Supabase Cloud üzerinde yeni proje oluşturun.
+2. Migration dosyalarını remote Supabase projenize uygulayın.
+3. Gerekirse seed verilerini remote veritabanına çalıştırın.
+4. Deployment ortamında şu environment variable'ları tanımlayın:
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
+   - `VITE_PUBLIC_SITE_URL`
+5. Supabase Auth redirect URL listesine production domaininizi ekleyin.
+
+## Lisans
+
+MIT
