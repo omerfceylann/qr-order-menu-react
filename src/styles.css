@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Lora:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand: #214e38;
+  --accent: #c69c52;
+  --brand-dark: #5fa27c;
+  --accent-dark: #e4be72;
+  --brand-active: var(--brand);
+  --accent-active: var(--accent);
+  --theme-page: color-mix(in srgb, var(--brand-active) 5%, #fbf7ee);
+  --theme-panel: color-mix(in srgb, var(--brand-active) 4%, #ffffff);
+  --theme-panel-strong: color-mix(in srgb, var(--accent-active) 10%, #ffffff);
+  --theme-border: color-mix(in srgb, var(--brand-active) 22%, transparent);
+  --theme-heading: color-mix(in srgb, var(--brand-active) 88%, #17201b);
+  --theme-muted: color-mix(in srgb, var(--brand-active) 55%, #4a5a50);
+  --theme-chip-bg: color-mix(in srgb, var(--accent-active) 18%, #ffffff);
+  --theme-chip-text: color-mix(in srgb, var(--brand-active) 78%, #17201b);
+}
+
+.dark {
+  --brand-active: var(--brand-dark);
+  --accent-active: var(--accent-dark);
+  --theme-page: color-mix(in srgb, var(--brand-active) 14%, #07110d);
+  --theme-panel: color-mix(in srgb, var(--brand-active) 12%, #0b1812);
+  --theme-panel-strong: color-mix(in srgb, var(--accent-active) 13%, #0b1812);
+  --theme-border: color-mix(in srgb, var(--brand-active) 34%, transparent);
+  --theme-heading: color-mix(in srgb, var(--brand-active) 64%, #ffffff);
+  --theme-muted: color-mix(in srgb, var(--brand-active) 62%, #d8e8de);
+  --theme-chip-bg: color-mix(in srgb, var(--brand-active) 20%, #09130f);
+  --theme-chip-text: color-mix(in srgb, var(--accent-active) 74%, #ffffff);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #fbf7ee;
+  color: #17201b;
+  font-family: Manrope, ui-sans-serif, system-ui, sans-serif;
+}
+
+.dark body {
+  background: #0d231a;
+  color: #f4fbf5;
+}
+
+.menu-font-manrope {
+  font-family: Manrope, ui-sans-serif, system-ui, sans-serif;
+}
+
+.menu-font-fraunces {
+  font-family: Fraunces, Georgia, serif;
+}
+
+.menu-font-nunito {
+  font-family: Nunito, ui-sans-serif, system-ui, sans-serif;
+}
+
+.menu-font-lora {
+  font-family: Lora, Georgia, serif;
+}
+
+.menu-font-montserrat {
+  font-family: Montserrat, ui-sans-serif, system-ui, sans-serif;
+}
+
+.menu-font-manrope .font-display,
+.menu-font-fraunces .font-display,
+.menu-font-nunito .font-display,
+.menu-font-lora .font-display,
+.menu-font-montserrat .font-display {
+  font-family: inherit;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@layer components {
+  .pill {
+    border: 2px solid color-mix(in srgb, var(--brand-active) 42%, var(--theme-border));
+    background: color-mix(in srgb, var(--theme-panel) 88%, #ffffff 12%);
+    color: var(--theme-heading);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, #ffffff 58%, transparent), 0 8px 20px color-mix(in srgb, var(--brand-active) 8%, transparent);
+    @apply shrink-0 rounded-full px-4 py-2.5 text-sm font-extrabold transition duration-200 hover:-translate-y-0.5 hover:shadow-sm;
+  }
+
+  .pill:hover {
+    border-color: color-mix(in srgb, var(--brand-active) 68%, var(--accent-active));
+    background: color-mix(in srgb, var(--accent-active) 18%, var(--theme-panel));
+    color: var(--theme-heading);
+  }
+
+  .pill-active {
+    background: var(--brand-active);
+    @apply border-transparent text-white shadow-lift hover:text-white;
+  }
+
+  .pill-active:hover {
+    background: var(--brand-active);
+    color: #ffffff;
+  }
+
+  .menu-card {
+    border-color: var(--theme-border);
+    background: color-mix(in srgb, var(--theme-panel) 92%, transparent);
+    @apply flex gap-4 rounded-lg border p-3 shadow-soft transition duration-200 hover:-translate-y-0.5 hover:shadow-lift;
+  }
+
+  .qty-btn {
+    border-color: var(--theme-border);
+    background: var(--theme-panel);
+    color: var(--theme-heading);
+    @apply grid h-9 w-9 place-items-center rounded-full border transition duration-200 hover:scale-105;
+  }
+
+  .qty-btn-dark {
+    background: var(--brand-active);
+    @apply border-transparent text-white hover:text-white;
+  }
+
+  .qty-btn-dark:hover {
+    background: var(--brand-active);
+    color: #ffffff;
+  }
+
+  .admin-tab {
+    @apply grid place-items-center gap-1 rounded-lg px-2 py-2 text-[11px] font-bold text-leaf-700 transition duration-200 hover:bg-leaf-50 dark:text-leaf-200 dark:hover:bg-leaf-900 lg:flex lg:justify-start lg:gap-3 lg:px-4 lg:py-3 lg:text-sm;
+  }
+
+  .admin-tab-active {
+    background: var(--brand-active);
+    @apply text-white shadow-lift hover:text-white;
+  }
+
+  .admin-tab-active:hover {
+    background: var(--brand-active);
+    color: #ffffff;
+  }
+
+  .customer-page {
+    background: var(--theme-page);
+    color: var(--theme-heading);
+  }
+
+  .customer-panel {
+    border-color: var(--theme-border);
+    background: color-mix(in srgb, var(--theme-panel) 95%, transparent);
+  }
+
+  .customer-panel-strong {
+    border-color: var(--theme-border);
+    background: color-mix(in srgb, var(--theme-panel-strong) 96%, transparent);
+  }
+
+  .theme-heading {
+    color: var(--theme-heading);
+  }
+
+  .theme-muted {
+    color: var(--theme-muted);
+  }
+
+  .theme-accent {
+    color: var(--accent-active);
+  }
+
+  .theme-eyebrow {
+    color: var(--brand-active);
+  }
+
+  .theme-chip {
+    background: var(--theme-chip-bg);
+    color: var(--theme-chip-text);
+    border: 1px solid var(--theme-border);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-rise {
+  animation: rise 0.45s ease both;
+}
+
+.scrollbar-hide {
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
